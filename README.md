@@ -17,7 +17,7 @@ code -> [https://github.com/katsuta1104/monkeyhunting/blob/main/main.py](https:/
 
 ## 注意
 <il>
-  <li>コードがよくわからないエラーを吐いたら再度実行してください
+  <li>よくわからないエラーを吐いたら再度実行してください
   </li>
   <li>稀に表示されない時があるので再度実行してください
   </li>
