@@ -21,4 +21,6 @@ code -> [https://github.com/katsuta1104/monkeyhunting/blob/main/main.py](https:/
   </li>
   <li>稀に表示されない時があるので再度実行してください
   </li>
+  <li>画素数の影響で誤差が生じる可能性が十分にあります。ご容赦ください
+  </li>
 </il>
