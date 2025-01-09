@@ -1,8 +1,10 @@
 # monkeyhunting
-指示に従ってcolabなどで動作させてください。
+指示に従ってcolabなどで動作させてください。<br><br>
+code -> [https://github.com/katsuta1104/monkeyhunting/blob/main/main.py](https://github.com/katsuta1104/monkeyhunting/blob/main/main.py)
+<br><br>
 colab -> [https://colab.research.google.com/?hl=ja](https://colab.research.google.com/?hl=ja)<br>
 
-code -> [https://github.com/katsuta1104/monkeyhunting/blob/main/main.py](https://github.com/katsuta1104/monkeyhunting/blob/main/main.py)
+
 
 
 ## 使い方
