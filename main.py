@@ -1,9 +1,18 @@
 !pip install APNG
-from math import sin,cos,sqrt,radians
+from math import sin,cos,tan,atan,sqrt,radians,degrees
 from apng import APNG
 from PIL import Image,ImageDraw,ImageFont,ImageOps
 import IPython
+
 g = 9.80665
+
+
+def check(h,l,theta):
+  rad = radians(theta)
+  tangent = tan(rad)
+  if abs(tangent - h/l) < 10**-2:
+    return True
+  return False
 
 def start():
   v0,L,H,theta = input("v(初速),L(距離),H(高さ),θ(投射角)の順に半角空白区切り").split()
@@ -19,12 +28,14 @@ def start():
     start()
 
   uhen = sqrt(g*(L**2+H**2)/2*H)
+  flag = check(H,L,theta)
 
   if v0>uhen:
-    print("この値は条件を満たします。よろしいですか？")
+    print("この値は不等式を満たします。よろしいですか？")
     ans = input("良いなら何も入力せず、そうでないなら何かを入力してください")
     if ans == "":
       print("承知しました")
+      print("角度良し！" if flag else "角度だめ")
       return v0,L,H,theta
     else:
       print("再度やり直します")
@@ -34,6 +45,7 @@ def start():
     ans = input("良いなら何も入力せず、そうでないなら何かを入力してください")
     if ans == "":
       print("承知しました")
+      print("角度良し！" if flag else "角度だめ")
       return v0,L,H,theta
     else:
       print("再度やり直します")
@@ -52,24 +64,36 @@ v0 = 7 #[初速]
 """
 
 rad = radians(theta)
+#print(rad)
 x = v0 * cos(rad)
 y = v0 * sin(rad)
 scale = 1.2 #scale倍する
 
+def culcurate_v(time):
+  way_y = y - g*time
+  way_x = x
+  radian = atan(way_y / way_x)
+  a = tan(radian) #傾き
+  return (float("{:.4f}".format(a)))
+
 def culcurete_maxtime():
   a = L*scale / x #弾丸が1.2L倍を超える時
   b = 2*y / g #弾丸が地面の下に行く
-  return max(a,b)
+  return min(a,b)
 
 def culcurete_maxheight():
-  t = 0
-  a = y*t - g*t**2/2
+  t = y/g
+  p = L*scale/x
+  if t >= p:
+    a = y*p - g*p**2/2
+  else:
+    a = y*t - g*t**2/2
   return max(a,H)
 
 
 max_time = culcurete_maxtime()
 max_y = culcurete_maxheight()
-max_x = H
+max_x = L
 #print(max_x,max_y)
 #横をx,高さをyとして800,400がマックスになるように調整する
 pixel_x = 800/(max_x*scale)
@@ -78,6 +102,12 @@ pixel_y = 400/(max_y*scale)
 
 def save(time,x1,y1,x2,y2):
   filename = "file%06d.png" % (time*100)
+
+  tangent = culcurate_v(time)
+  plaspixel_x = int(100*pixel_x)
+  plaspixel_y = int(tangent*100*pixel_y)
+  #print(plaspixel_x,plaspixel_y,tangent)
+
   #print(filename)
   im = Image.new("RGB",(800,400),(255,255,255))
   draw = ImageDraw.Draw(im)
@@ -92,6 +122,8 @@ def save(time,x1,y1,x2,y2):
 
   draw.ellipse((monkey_x-10,monkey_y-10,monkey_x+10,monkey_y+10),fill=(255,0,0),outline=(0,0,0))
   draw.ellipse((bullet_x-10,bullet_y-10,bullet_x+10,bullet_y+10),fill=(0,255,0),outline=(0,0,0))
+  #print((tangent*100))
+  draw.line(((bullet_x,bullet_y),(bullet_x+plaspixel_x,bullet_y+plaspixel_y)),fill=(0,0,255))
   #print(bullet_x,bullet_y)
 
 
@@ -123,6 +155,6 @@ while now_time < max_time:
 APNG.from_files(files,delay=1).save('animation.png')
 IPython.display.Image('animation.png')
 
-#入力例1 [10 5 5 45] 条件を満たさない
-#入力例2 [45,5,5,45] 条件を満たす
-#入力例3 [150,12,13,80] 条件を満たす
+#入力例1 [10 5 5 45] 不等式を満たさない
+#入力例2 [45,5,5,45] 不等式を満たす
+#入力例3 [150,12,13,80] 不等式を満たす、が………?
