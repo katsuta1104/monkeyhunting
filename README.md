@@ -17,6 +17,24 @@ colab -> [https://colab.research.google.com/?hl=ja](https://colab.research.googl
   </li>
 </ol>
 
+
+## 機能
+<il>
+  <li>
+    初速度、距離、高さ、投射角(仰角)を設定できる
+  </li>
+  <li>自動的に縮尺が調整される
+</li>
+  <li>
+    弾丸の向きが線として表示される
+  </li>
+  <li>
+    アニメーションとして直感的に理解できる
+  </li>
+</il>
+
+
+
 ## 注意
 <il>
   <li>よくわからないエラーを吐いたら再度実行してください
